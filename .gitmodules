@@ -1,0 +1,3 @@
+[submodule "1_old_code/FreeMcBoot"]
+	path = 1_old_code/FreeMcBoot
+	url = https://github.com/TnA-Plastic/FreeMcBoot.git

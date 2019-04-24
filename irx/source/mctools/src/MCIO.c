@@ -1,8 +1,8 @@
 #include <errno.h>
+#include <mcman.h>
 #include <sysclib.h>
 
 #include "mctools_internal.h"
-#include "mcman.h"
 #include "mctools.h"
 #include "cache.h"
 #include "MCIO.h"
@@ -34,7 +34,7 @@ int WriteBlock(int port, int slot, unsigned short int PageSize, unsigned short i
 		/* If someone can tell me how the EraseBlock function really works, that will be informative. The Sony MCSERV module calculates the checksum of the block to be written separately.
 			So since EraseBlock probably doesn't calculate the checksums of the blocks... what does it really calculate?
 		*/
-		if((result=McEraseBlock(port, 0, block, NULL, NULL))>=0){
+		if((result=McEraseBlock2(port, 0, block, NULL, NULL))>=0){
 			for(i=0; i<BlockSize; i++){
 				/* Manually calculate the ECC for each 128-byte block for each page of the block to be written. See the comment above for more details. */
 				for(ECCBlockSect=0; ECCBlockSect<(PageSize/128); ECCBlockSect++) McDataChecksum(&((unsigned char *)buffer)[i*PageSize+ECCBlockSect*128], &ECC_data[ECCBlockSect*3]);

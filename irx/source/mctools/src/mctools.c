@@ -2,16 +2,16 @@
 #include <irx.h>
 #include <intrman.h>
 #include <loadcore.h>
+#include <mcman.h>
 #include <sifcmd.h>
 #include <sifman.h>
 #include <sysclib.h>
 #include <sysmem.h>
 #include <stdio.h>
-#include <types.h>
 #include <thbase.h>
+#include <types.h>
 
 #include "mctools_internal.h"
-#include "mcman.h"
 #include "mctools.h"
 #include "cache.h"
 #include "MCIO.h"
@@ -127,9 +127,9 @@ static void mctools_RPC_srv(void *args){
 }
 
 static int FlushMCMANClusterCache(int port, int slot){
+	//While file should not be opened while MCTOOLs is running (MCMAN's cache cannot be invalidated, by design), these steps are safeguards.
 	McCloseAll();
-	McFlushClusterCache(port, slot);
-	McInvalidateClusterCache(port, slot);
+	McFlushCache(port, slot);
 
 	return 0;
 }
